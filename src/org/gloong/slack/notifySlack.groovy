@@ -70,7 +70,7 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
 
   JSONObject attachment = new JSONObject();
   attachment.put('author',"jenkins");
-  attachment.put('author_link',"https://danielschaaff.com");
+  attachment.put('author_link',"https://build.ecms-stage.gloo.ng");
   attachment.put('title', title.toString());
   attachment.put('title_link',title_link.toString());
   attachment.put('text', subject.toString());
