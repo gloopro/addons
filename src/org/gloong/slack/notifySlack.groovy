@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+package org.gloong.slack;
 
 /**
 * notify slack and set message based on build status
