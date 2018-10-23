@@ -18,9 +18,7 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.RUN_DISPLAY_URL}|Open>) (<${env.RUN_CHANGES_DISPLAY_URL}|  Changes>)'"
-  def title = "${env.JOB_NAME} Build: ${env.BUILD_NUMBER}"
-  def title_link = "${env.RUN_DISPLAY_URL}"
+  def title = "Build [${env.BUILD_NUMBER}] (<${env.RUN_DISPLAY_URL}|Open>) (<${env.RUN_CHANGES_DISPLAY_URL}|  Changes>)"
   def branchName = "${env.BRANCH_NAME}"
 
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
@@ -72,7 +70,6 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
   attachment.put('author',"jenkins");
   attachment.put('author_link',"https://build.ecms-stage.gloo.ng");
   attachment.put('title', title.toString());
-  attachment.put('title_link',title_link.toString());
   attachment.put('text', subject.toString());
   attachment.put('fallback', "fallback message");
   attachment.put('color',colorCode);
