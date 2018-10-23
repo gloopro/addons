@@ -1,8 +1,5 @@
 #!/usr/bin/env groovy
 
-/**
-* notify slack and set message based on build status
-*/
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import hudson.tasks.test.AbstractTestResultAction;
@@ -13,12 +10,14 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
   // buildStatus of null means successfull
   buildStatus = buildStatus ?: 'SUCCESSFUL'
   channel = channel ?: '#jenkins'
-
-
+  def jobName = "${env.JOB_NAME}"
+  jobName = jobName.getAt(0..(jobName.indexOf('/') - 1))
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
-  def title = "Build [${env.BUILD_NUMBER}] (<${env.RUN_DISPLAY_URL}|Open>) (<${env.RUN_CHANGES_DISPLAY_URL}|  Changes>)"
+  def subject = "${buildStatus}: Build [${env.BUILD_NUMBER}] (<${env.RUN_DISPLAY_URL}|Open>) (<${env.RUN_CHANGES_DISPLAY_URL}|  Changes>)"
+  def title = "${jobName}"
+  def title_link = "${env.RUN_DISPLAY_URL}"
   def branchName = "${env.BRANCH_NAME}"
 
   def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
@@ -70,6 +69,7 @@ def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
   attachment.put('author',"jenkins");
   attachment.put('author_link',"https://build.ecms-stage.gloo.ng");
   attachment.put('title', title.toString());
+  attachment.put('title_link',title_link.toString());
   attachment.put('text', subject.toString());
   attachment.put('fallback', "fallback message");
   attachment.put('color',colorCode);
