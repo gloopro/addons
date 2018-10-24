@@ -4,6 +4,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import hudson.tasks.test.AbstractTestResultAction;
 import hudson.model.Actionable;
+import hudson.tasks.junit.CaseResult
 
 def call(String buildStatus = 'STARTED', String channel = '#jenkins') {
 
